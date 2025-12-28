@@ -6,6 +6,6 @@ import { defineConfig } from "vite";
 export default defineConfig({
 	plugins: [react(), tailwindcss()],
 	build: {
-		sourcemap: true, // ビルド後のデバッグが必要な場合
+		sourcemap: true,
 	},
 });
