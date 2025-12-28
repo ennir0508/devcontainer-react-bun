@@ -83,7 +83,18 @@ bun create vite
 
 必要に応じて `package.json` の `scripts` を編集します（例: ホストからのアクセスを許可するために `--host` オプションを追加するなど）。
 
- ![package.jsonのscripts編集](img/12_edit_packagejson.png) 
+```json
+{
+  ...
+  "scripts": {
+    "dev": "vite --host", // ← `--host` を追加
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  ...
+}
+```
 
 ### ステップ 8: 依存関係のインストールと起動
 
@@ -96,11 +107,12 @@ bun run dev
 
  ![bun run devによる開発サーバー起動](img/11_bun_run_dev.png) 
 
+> Tips: 今後、ディレクトリを移動しなくてもいいように、 `my-app` 内のすべてのファイルをプロジェクト直下に移動するか、 Dev Container 起動時の WORKDIR を `my-app` にするとよい。
 
 ### ステップ 9: 動作確認
 
 ブラウザでローカルサーバー（例: `http://localhost:5173`）にアクセスし、React アプリが表示されることを確認します。
 
- ![ブラウザでのReactアプリ表示確認](img/13_open_browser.png)
+ ![ブラウザでのReactアプリ表示確認](img/12_open_browser.png)
 
 また、 `/my-app/src/App.tsx` を修正すると、自動反映されます。
