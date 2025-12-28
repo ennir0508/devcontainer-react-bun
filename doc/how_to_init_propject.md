@@ -116,3 +116,66 @@ bun run dev
  ![ブラウザでのReactアプリ表示確認](img/12_open_browser.png)
 
 また、 `/my-app/src/App.tsx` を修正すると、自動反映されます。
+
+## 3. デバッグ
+
+### ステップ1: Vite の設定を変更する。
+
+`vite.config.ts` に `build.sourcemap` を追加します。
+
+```ts
+export default defineConfig({
+  ...
+	build: {
+		sourcemap: true,
+	},
+  ...
+});
+```
+
+### ステップ2: launch.json 追加
+
+`.vscode/launch.json` を作成し、デバッグ時設定を記載します。
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "デバッグ起動",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${webRoot}/src/*"
+      }
+    }
+  ]
+}
+```
+
+
+### ステップ3: デバッグモードを起動します。
+
+以下のコマンドでアプリを起動します。
+
+```bash
+bun run dev
+```
+
+もしくは、 `devcontainer.json` に起動時実行コマンド `postCreateCommand` を設定すると、コンテナ起動時に自動でアプリを起動します。
+
+```json
+{
+  "name": "Bun",
+  "dockerFile": "Dockerfile",
+  "postCreateCommand": "bun run dev",
+  ...
+}
+```
+
+そして、VSCodeの「実行とデバッグ ![Run and Debug](https://api.iconify.design/codicon:debug-alt.svg?color=%2372d185)」を開き、再生ボタン ![Run](https://api.iconify.design/codicon:debug-start.svg?color=%2372d185) をクリックすると、 Google Chrome が起動する。
+ファイルにブレイクポイントを付けると実行時にそこで止まるようになります。
+
+![デバッグ実行](img/20_launch_debug.png)
